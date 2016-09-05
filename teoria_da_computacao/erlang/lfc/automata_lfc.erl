@@ -1,5 +1,5 @@
 -module(automata_lfc).
--export([state_after_w/2, new_lfc/4, next_status/3, full_d/2, accept_w/2]).
+-export([state_after_w/2, new_lfc/4, next_status/3, full_d/2, accept_w/2, process_exp/2]).
 
 -record(lfc, {q, %%estados
               e, %%eventos
@@ -34,3 +34,5 @@ define_d(Q, E, D) -> L  = sets:from_list([{Qi, Ei} || {Qi, Ei, _} <- D]),
 
 %%Cria todas as transicoes de QxE
 full_d(Q, E) -> lists:flatmap(fun(X) -> lists:map(fun(Y) -> {X, Y} end, Q) end, E).
+
+process_exp(EXP, V) -> re:split(EXP, " OR ").
